@@ -1,0 +1,12 @@
+opencv-python
+numpy
+pandas
+torch
+torchvision
+tqdm
+matplotlib
+scipy
+ultralytics  # YOLOv8 support
+pillow
+requests
+json5
