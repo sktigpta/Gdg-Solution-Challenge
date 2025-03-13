@@ -1,221 +1,402 @@
-# **Safeguarding Stories: AI for Intellectual Property Protection (AIML)**
+# 🛡️ Safeguarding Stories: AI for Intellectual Property Protection
 
-**Problem Statement:**
-Disney's vast library of intellectual property, including movies, TV shows, and characters, is a prime target for cyberattacks and piracy. Unauthorized access and distribution of this content can lead to significant financial losses and damage to the brand.
+![Disney IP Protection](https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000009/1736408607609-SafeguardingStoriesAIforIntellectualPropertyProtection.png)
 
-**Objective:**
-Participants are tasked with developing AI-driven solutions to protect Disney's intellectual property from cyber threats. Solutions should include real-time monitoring, automated takedown requests, and predictive analytics to identify and mitigate piracy risks.
+## 🌟 Overview
 
-## **Overview**  
-**Safeguarding Stories: AI for Intellectual Property Protection** is an advanced AI-driven system designed to detect copyright violations, unauthorized content, and intellectual property misuse on YouTube. By leveraging deep learning, NLP, and computer vision techniques, the system enables real-time monitoring, automated DMCA takedown requests, and predictive piracy analytics.
+Safeguarding Stories is an advanced AI-driven system designed to protect Disney's vast intellectual property from cyber threats and unauthorized distribution. By leveraging deep learning, computer vision, and natural language processing, our solution provides real-time monitoring, automated DMCA takedown capabilities, and predictive analytics to identify emerging piracy trends.
 
-## **Table of Contents**  
-- [Overview](#overview)  
-- [Problem Statement](#problem-statement)  
-- [Objective](#objective)  
-- [Project Structure (AIML)](#project-structure-aiml)  
-- [Features (AIML)](#features-aiml)  
-- [Project Structure (Frontend)](#project-structure-frontend)  
-- [Features (Frontend)](#features-frontend)  
-- [Project Structure (Backend)](#project-structure-backend)  
-- [Features (Backend)](#features-backend)  
-- [Configuration](#configuration)  
-- [Usage](#usage)  
-  - [Basic Usage](#basic-usage)  
-  - [Running Tests](#running-tests)  
-- [Tech Stack](#tech-stack)  
-- [Team](#team)  
-- [License](#license)  
-- [Contributing](#contributing)
+## ✨ Key Features
 
----
+- **Real-time Content Monitoring** across YouTube and other platforms
+- **AI-powered Detection** of visual, audio, and scene-based IP infringement
+- **Automated DMCA Generation** for swift takedown of infringing content
+- **Predictive Analytics** to identify piracy hotspots and trends
+- **Whitelist Management** for authorized content partners
+- **User-friendly Dashboard** with comprehensive reporting capabilities
 
-## **Project Structure (AIML)**  
-📦 **AI-ML**  
- ┣ 📂 `data/`  
- ┃ ┣ 📜 `raw_videos.csv`  
- ┃ ┣ 📜 `processed_videos.json`  
- ┃ ┣ 📂 `logs/`  
- ┃ ┃ ┗ 📜 `scraper.log`  
- ┃ ┣ 📂 `models/`  
- ┃ ┃ ┣ 📜 `yolo_weights.onnx`  
- ┃ ┃ ┗ 📜 `audio_fingerprint.pkl`  
- ┃ ┗ 📜 `dmca_requests.json`  
- ┣ 📂 `src/`  
- ┃ ┣ 📂 `api/`  
- ┃ ┃ ┣ 📜 `youtube_scraper.py`  
- ┃ ┃ ┣ 📜 `dmca_handler.py`  
- ┃ ┃ ┗ 📜 `ai_integration.py`  
- ┃ ┣ 📂 `processing/`  
- ┃ ┃ ┣ 📜 `video_downloader.py`  
- ┃ ┃ ┣ 📜 `frame_extractor.py`  
- ┃ ┃ ┗ 📜 `audio_extractor.py`  
- ┃ ┣ 📂 `ai/`  
- ┃ ┃ ┣ 📜 `object_detection.py`  
- ┃ ┃ ┣ 📜 `audio_analysis.py`  
- ┃ ┃ ┗ 📜 `feature_extraction.py`  
- ┃ ┣ 📂 `storage/`  
- ┃ ┃ ┗ 📜 `firestore_db.py`  
- ┃ ┣ 📜 `main.py`  
- ┃ ┣ 📜 `config.py`  
- ┃ ┗ 📜 `utils.py`  
- ┣ 📂 `notebooks/`  
- ┃ ┗ 📜 `exploratory_analysis.ipynb`  
- ┣ 📂 `tests/`  
- ┃ ┣ 📜 `test_scraper.py`  
- ┃ ┣ 📜 `test_object_detection.py`  
- ┃ ┗ 📜 `test_firestore_db.py`
+## 🧩 System Architecture
 
-## **Features (AIML)**  
-✔ Detects Disney characters and logos using AI  
-✔ Extracts audio fingerprints for copyrighted sound detection  
-✔ Generates automated DMCA takedown requests  
-✔ Stores analyzed video data in Firestore  
-✔ Provides real-time content monitoring  
+Our system consists of three major components that work together seamlessly:
 
----
+### 1. Backend Service
 
-## **Project Structure (Frontend)**  
-📦 **Frontend**  
- ┣ 📂 `public/`  
- ┃ ┗ 📜 `index.html`  
- ┣ 📂 `src/`  
- ┃ ┣ 📂 `components/`  
- ┃ ┃ ┣ 📜 `Navbar.jsx`  
- ┃ ┃ ┣ 📜 `VideoCard.jsx`  
- ┃ ┃ ┗ 📜 `DMCAForm.jsx`  
- ┃ ┣ 📂 `pages/`  
- ┃ ┃ ┣ 📜 `Home.jsx`  
- ┃ ┃ ┣ 📜 `VideoAnalysis.jsx`  
- ┃ ┃ ┗ 📜 `DMCARequests.jsx`  
- ┃ ┣ 📂 `services/`  
- ┃ ┃ ┣ 📜 `api.js`  
- ┃ ┃ ┗ 📜 `auth.js`  
- ┃ ┣ 📂 `context/`  
- ┃ ┃ ┗ 📜 `AppContext.js`  
- ┃ ┣ 📂 `styles/`  
- ┃ ┃ ┗ 📜 `styles.css`  
- ┃ ┣ 📜 `App.jsx`  
- ┃ ┗ 📜 `index.js`  
- ┣ 📜 `package.json`  
- ┣ 📜 `.env`  
- ┣ 📜 `README.md`
+The backend handles YouTube data collection, search query management, and provides API endpoints for the frontend dashboard.
 
-## **Features (Frontend)**  
-✔ User-friendly dashboard to track detected copyright violations  
-✔ Form to submit DMCA takedown requests  
-✔ Real-time notifications on video status  
-✔ Dark and light mode UI  
+```
+📦 Backend  
+ ┣ 📂 controllers/  
+ ┃ ┣ 📜 permissionController.js  # Manages authorized content
+ ┃ ┣ 📜 searchQueriesController.js  # Handles search parameters
+ ┃ ┗ 📜 youtubeController.js  # Controls YouTube data collection
+ ┣ 📂 routes/  
+ ┃ ┣ 📜 permissionRoutes.js  # API routes for permissions
+ ┃ ┣ 📜 searchQueries.js  # API routes for search queries
+ ┃ ┗ 📜 youtubeRoutes.js  # API routes for YouTube operations
+ ┣ 📂 middleware/  
+ ┃ ┣ 📜 authMiddleware.js  # Authentication handling
+ ┃ ┗ 📜 errorHandler.js  # Error management
+ ┣ 📂 config/  
+ ┃ ┗ 📜 firebase.js  # Firebase configuration
+ ┣ 📂 script/  
+ ┃ ┗ 📜 youtubeFetcher.js  # YouTube data collection script
+ ┣ 📜 server.js  # Main server application
+ ┗ 📜 .env  # Environment variables
+```
 
----
+### 2. AI Processing Engine
 
-## **Project Structure (Backend)**  
-📦 **Backend**  
- ┣ 📂 `controllers/`  
- ┃ ┣ 📜 `videoController.js`  
- ┃ ┣ 📜 `aiController.js`  
- ┃ ┗ 📜 `dmcaController.js`  
- ┣ 📂 `models/`  
- ┃ ┗ 📜 `videoModel.js`  
- ┣ 📂 `routes/`  
- ┃ ┣ 📜 `videoRoutes.js`  
- ┃ ┣ 📜 `aiRoutes.js`  
- ┃ ┗ 📜 `dmcaRoutes.js`  
- ┣ 📂 `middleware/`  
- ┃ ┣ 📜 `authMiddleware.js`  
- ┃ ┗ 📜 `errorHandler.js`  
- ┣ 📂 `config/`  
- ┃ ┗ 📜 `db.js`  
- ┣ 📂 `services/`  
- ┃ ┣ 📜 `aiService.js`  
- ┃ ┗ 📜 `dmcaService.js`  
- ┣ 📂 `storage/`  
- ┃ ┗ 📜 `upload.js`  
- ┣ 📜 `app.js`  
- ┣ 📜 `.env`  
- ┣ 📜 `package.json`
+The AI component handles the core detection functionality, comparing videos against reference content to identify IP violations.
 
-## **Features (Backend)**  
-✔ RESTful API for AI processing and takedown management  
-✔ Secure authentication using JWT  
-✔ Database integration with Firestore  
-✔ Handles YouTube video scraping and processing  
+```
+📦 AI
+ ┣ 📂 assets/  # Stores reference content and frames
+ ┣ 📂 dmca/  # DMCA template generation
+ ┣ 📂 logs/  # System operation logs
+ ┣ 📂 processing/  # Video processing utilities
+ ┣ 📂 src/
+ ┃ ┣ 📂 firebase/  # Firebase integration
+ ┃ ┣ 📂 models/  # AI detection models
+ ┃ ┣ 📂 processing/  # Core processing logic
+ ┃ ┗ 📂 utils/  # Utility functions
+ ┣ 📜 main.py  # Main application entry point
+ ┗ 📜 requirements.txt  # Python dependencies
+```
 
----
+### 3. Frontend Dashboard
 
-## **Team Members**
+The frontend provides an intuitive interface for monitoring IP protection efforts and managing the system.
+```
+📦 Client
+ ┣ 📂 public/  # Static assets
+ ┣ 📂 src/
+ ┃ ┣ 📂 components/  # UI components
+ ┃ ┣ 📂 pages/  # Application pages
+ ┃ ┣ 📂 services/  # API services
+ ┃ ┣ 📂 store/  # State management
+ ┃ ┣ 📂 styles/  # Component styling
+ ┃ ┗ 📂 utils/  # Utility functions
+ ┣ 📜 package.json  # Dependencies
+ ┗ 📜 .env  # Environment variables
+```
 
-| Name                | Role                        | Description                | Contact                        |
-|---------------------|-----------------------------|----------------------------|--------------------------------|
-| Shaktidhar Gupta    | Leader & AIML Engineer       | Leads the team and works on AI/ML tasks | [sktigpta@gmail.com](mailto:sktigpta@gmail.com) |
-| Satyam Kumar        | Backend Developer           | Handles the server-side and database management | [jhajhasatyam100@gmail.com](mailto:jhajhasatyam100@gmail.com) |
-| Saurav Kumar        | Frontend Designer and UI/UX Engineer | Works on the user interface design | [sauravkumar9447@gmail.com](mailto:sauravkumar9447@gmail.com) |
-| Rishi Srestha       | Frontend Designer & Documentation | Designs the UI and handles project documentation | [rishi@example.com](mailto:rishi@example.com) |
+## 🛠️ Technology Stack
 
----
+### AI & Machine Learning
+- TensorFlow/PyTorch for deep learning models
+- OpenCV for video processing and frame extraction
+- YOLO object detection for identifying Disney IP elements
+- NumPy and Pandas for data manipulation
+- Google API Client for YouTube integration
 
-## **Tech Stack**
+**Detailed AI Component Architecture**
 
-### **AIML (AI & Machine Learning) Dependencies**
+```mermaid
+classDiagram
+    class Main {
+        +configure_logging()
+        +create_required_directories()
+        +main()
+    }
+    
+    class FirebaseHandler {
+        +get_pending_videos()
+        +save_results()
+        +mark_as_failed()
+    }
+    
+    class YOLODetector {
+        +load_model()
+        +detect()
+        +process_results()
+    }
+    
+    class VideoProcessor {
+        +process_video()
+        +download_video()
+        +extract_frames()
+        +compare_frames()
+        +generate_timestamps()
+        +cleanup()
+    }
+    
+    class ReferenceData {
+        +load_reference_data()
+        +get_reference_frames()
+    }
+    
+    class FrameExtractor {
+        +extract_frames()
+        +calculate_interval()
+    }
+    
+    class FrameComparator {
+        +compare_frames()
+        +calculate_similarity()
+    }
+    
+    Main --> FirebaseHandler
+    Main --> YOLODetector
+    Main --> VideoProcessor
+    
+    VideoProcessor --> FrameExtractor
+    VideoProcessor --> FrameComparator
+    
+    FrameComparator --> YOLODetector
+    ReferenceData --> YOLODetector
+    
+    Main --> ReferenceData
+```
+**AI System Architecture and Data Flow**
+```mermaid
+flowchart TD
+    A[(Firebase)] <--> B[Main Application]
+    
+    subgraph "AI Processing Engine"
+        B --> C[Firebase Handler]
+        C --> D[Get Pending Videos]
+        D --> E[Video Processing Pipeline]
+        
+        E --> F[Video Downloader]
+        F --> G[Frame Extractor]
+        G --> H[Frame Processor]
+        
+        I[YOLO Detector] --> H
+        J[Reference Data] --> H
+        
+        H --> K[Similarity Calculator]
+        K --> L[Generate Timestamps]
+        L --> M[Result Formatter]
+        M --> N[Save to Firebase]
+    end
+    
+    B --> O[Monitoring & Logging]
+    
+    style A fill:#FF9800,stroke:#333,stroke-width:1px
+    style B fill:#9C27B0,stroke:#333,stroke-width:1px
+    style I fill:#E91E63,stroke:#333,stroke-width:1px
+    style J fill:#3F51B5,stroke:#333,stroke-width:1px
+```
 
-- **google-api-python-client**: YouTube Data API
-- **pytube**: Download YouTube videos
-- **pandas**: Data handling
+### Backend
+- Node.js and Express for the web server
+- Firebase Admin SDK for database and authentication
+- Axios for HTTP requests
+- JWT for secure authentication
+- CORS for cross-origin resource sharing
 
-#### **AI & Video Processing**
-- **opencv-python**: Computer vision (frame extraction & analysis)
-- **numpy**: Numerical operations
-- **torch**: PyTorch (for AI models, optional)
-- **tensorflow**: TensorFlow (if using deep learning)
-- **onnxruntime**: Running YOLO models in ONNX format
+**Detailed Backend Component Architecture**
+```mermaid
+classDiagram
+    class Server {
+        +Express app
+        +configure()
+        +setupRoutes()
+        +start()
+    }
+    
+    class YoutubeController {
+        +fetchVideos()
+        +getYouTubeVideos()
+        +getStoredVideos()
+    }
+    
+    class PermissionController {
+        +getPermittedVideos()
+        +getKnownChannels()
+        +addPermittedVideo()
+        +addKnownChannel()
+        +deletePermittedVideo()
+        +deleteKnownChannel()
+    }
+    
+    class SearchQueriesController {
+        +getSearchQueries()
+        +addSearchQuery()
+        +deleteSearchQuery()
+    }
+    
+    class FirebaseConfig {
+        +initializeApp()
+        +getFirestore()
+    }
+    
+    class YoutubeFetcher {
+        +fetchVideosByQuery()
+        +checkExisting()
+        +saveToFirebase()
+    }
+    
+    class AuthMiddleware {
+        +verifyToken()
+        +checkRole()
+    }
+    
+    Server --> YoutubeController
+    Server --> PermissionController
+    Server --> SearchQueriesController
+    
+    YoutubeController --> YoutubeFetcher
+    YoutubeFetcher --> FirebaseConfig
+    PermissionController --> FirebaseConfig
+    SearchQueriesController --> FirebaseConfig
+    
+    Server --> AuthMiddleware
+```
 
-#### **Firebase Backend Integration**
-- **firebase-admin**: Firestore (database)
-- **google-cloud-firestore**: Firestore API client
+**System Architecture**
+```mermaid
+flowchart TD
+    A[Client Browser] <--> B[Express Server]
+    B <--> C[(Firebase)]
+    
+    subgraph "Backend Architecture"
+        B --> D[YouTube API Service]
+        D --> E[Video Fetcher]
+        B --> F[Permission Controller]
+        B --> G[Search Query Controller]
+        E --> H[Data Formatter]
+        
+        H --> I{Already\nProcessed?}
+        I -->|Yes| J[Skip]
+        I -->|No| K[Store in Firebase]
+        
+        F --> L[Known Channels]
+        F --> M[Permitted Videos]
+        G --> N[Search Query Manager]
+    end
+    
+    C <--> O[AI Processing System]
+    
+    style B fill:#4CAF50,stroke:#333,stroke-width:1px
+    style C fill:#FF9800,stroke:#333,stroke-width:1px
+    style D fill:#2196F3,stroke:#333,stroke-width:1px
+    style O fill:#9C27B0,stroke:#333,stroke-width:1px
+```
 
-#### **Utility & Testing**
-- **requests**: Web requests
-- **tqdm**: Progress bars
-- **loguru**: Advanced logging
-- **pytest**: Testing framework
+### Frontend
+- React for user interface components
+- Redux for state management
+- Material UI for component library
+- Axios for API communication
+- Chart.js for data visualization
 
-#### **Jupyter Notebook (if using notebooks for AI testing)**
-- **notebook**: Jupyter environment
+**Complete System Architecture and Integration**
+```mermaid
+flowchart TD
+    A[Client Browser] <--> B[Frontend React App]
+    
+    B <--> C[Backend Express Server]
+    C <--> D[(Firebase Database)]
+    
+    subgraph "Data Flow"
+        C --> E[YouTube API Service]
+        E --> F[Video Metadata Collection]
+        F --> G[Store in youtube_videos]
+        
+        H[AI Processing Engine] <--> D
+        H --> I[Poll youtube_videos]
+        I --> J[Download & Process Videos]
+        J --> K[YOLO Detection & Comparison]
+        K --> L[Store Results in processed_collection]
+        
+        B --> M[Dashboard Visualization]
+        M --> N[Fetch from processed_collection]
+        M --> O[User Actions]
+        O --> P[DMCA Generation]
+        O --> Q[Whitelist Management]
+    end
+    
+    style B fill:#4CAF50,stroke:#333,stroke-width:1px
+    style C fill:#2196F3,stroke:#333,stroke-width:1px
+    style D fill:#FF9800,stroke:#333,stroke-width:1px
+    style H fill:#9C27B0,stroke:#333,stroke-width:1px
+    style K fill:#E91E63,stroke:#333,stroke-width:1px
+```
 
----
+## 🚀 Getting Started
 
-### **Backend Dependencies**
+### Prerequisites
+- Node.js (v14 or higher)
+- Python 3.8+
+- Firebase account
+- YouTube Data API key
 
-- **express**: Web framework for Node.js
-- **cors**: Cross-Origin Resource Sharing
-- **firebase-admin**: Firebase Admin SDK
-- **dotenv**: Loads environment variables
-- **jsonwebtoken**: JWT for secure authentication
+### Installation
 
----
+#### 1. Clone the repository
+```bash
+git clone https://github.com/your-organization/safeguarding-stories.git
+cd safeguarding-stories
+```
 
-### **Frontend Dependencies**
+#### 2. Backend Setup
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Edit .env with your API keys and configuration
+npm start
+```
 
-- **react**: React framework for building the user interface
-- **react-dom**: For React rendering on the web
-- **react-router-dom**: For routing between components in React
-- **axios**: For making HTTP requests to the backend
-- **redux**: State management in React
-- **redux-thunk**: Middleware for redux asynchronous actions
-- **material-ui**: UI component library
-- **styled-components**: CSS-in-JS for styling React components
+#### 3. AI Module Setup
+```bash
+cd ../ai
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+# Configure firebase credentials
+python main.py
+```
 
----
+#### 4. Frontend Setup
+```bash
+cd ../client
+npm install
+cp .env.example .env
+# Edit .env with your API endpoint
+npm start
+```
 
-## **License**  
+## 📊 How It Works
+
+1. **Content Collection**: The backend periodically fetches videos from YouTube based on configurable search queries.
+2. **AI Analysis**: The AI engine compares collected videos against reference Disney content using:
+   - Frame-by-frame comparison
+   - Object detection for Disney characters and logos
+   - Audio fingerprinting for music and dialogue
+3. **Results Processing**: Similarity scores and timestamps are calculated and stored in Firebase.
+4. **Automated Actions**: Based on configurable thresholds, the system can:
+   - Generate DMCA takedown notices
+   - Flag content for human review
+   - Whitelist authorized content
+5. **Analytics & Reporting**: The dashboard provides real-time insights into piracy trends and protection metrics.
+
+## 👥 Team Members
+
+| Name | Role | Expertise | Contact |
+|------|------|-----------|---------|
+| **Shaktidhar Gupta** | Team Lead & AIML Engineer | AI/ML architecture, computer vision | [email](mailto:sktigpta@gmail.com) |
+| **Satyam Kumar** | Backend Developer | Server architecture, database design | [email](mailto:jhajhasatyam100@gmail.com) |
+| **Saurav Kumar** | Frontend Designer & UI/UX | Interface design, user experience | [email](mailto:sauravkumar9447@gmail.com) |
+| **Rishi Srestha** | Frontend Developer & Documentation | UI implementation, documentation | [email](mailto:rishi@example.com) |
+
+## 🔮 Future Roadmap
+
+- Integration with additional platforms (TikTok, Instagram, Twitter)
+- Advanced blockchain-based content verification
+- Enhanced AI models for detecting transformed/modified content
+- Global legal jurisdiction-aware DMCA processing
+- Mobile application for on-the-go monitoring
+
+## 📝 License
+
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
+## 🤝 Contributing
+
+We welcome contributions to improve Safeguarding Stories! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute.
+
 ---
 
-## **Contributing**  
-We welcome contributions! Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
-
----
-
-## **Configuration**  
-Refer to the [CONFIGURE.md](CONFIGURE.md) for detailed instructions on setting up and configuring the project.
+*Built with ❤️ by the Safeguarding Stories Team*
