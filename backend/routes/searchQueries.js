@@ -3,13 +3,8 @@ const { getSearchQueries, addSearchQuery, deleteSearchQuery } = require("../cont
 
 const router = express.Router();
 
-// Get all search queries
 router.get("/", getSearchQueries);
-
-// Add new search query
 router.post("/", addSearchQuery);
-
-// Delete a search query by ID
 router.delete("/:id", deleteSearchQuery);
 
 module.exports = router;
