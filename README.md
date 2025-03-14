@@ -1,6 +1,7 @@
 # 🛡️ Safeguarding Stories: AI for Intellectual Property Protection
 
-![Disney IP Protection](https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000009/1736408607609-SafeguardingStoriesAIforIntellectualPropertyProtection.png)
+<img src="https://storage.googleapis.com/vision-hack2skill-production/innovator/USER00000009/1736408607609-SafeguardingStoriesAIforIntellectualPropertyProtection.png" 
+     alt="Disney IP Protection" style="width: 100%; border-radius: 1em;">
 
 ## 🌟 Overview
 
@@ -328,6 +329,28 @@ flowchart TD
 ```bash
 git clone https://github.com/your-organization/safeguarding-stories.git
 cd safeguarding-stories
+```
+
+**Setup your .env file (root)**
+```
+# Ignore Python virtual environment
+ai/.venv/
+
+# Ignore Firebase credentials and environment files
+ai/src/firebase/serviceAccountKey.json
+ai/src/firebase/.env
+backend/firebase/serviceAccountKey.json
+backend/firebase/.env
+
+# Ignore AI model files
+ai/src/models/pretrained
+ai/assets/frames
+ai/assets/videos
+
+ai/logs/processing.log
+
+ai/temp_frames
+ai/processing/queue
 ```
 
 #### 2. Backend Setup
