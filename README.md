@@ -345,7 +345,7 @@ flowchart TD
 #### 1. Clone the repository
 ```bash
 git clone https://github.com/sktigpta/Gdg-Solution-Challenge.git
-cd safeguarding-stories
+cd Gdg-Solution-Challenge
 ```
 
 **Setup your .env file (root)**
