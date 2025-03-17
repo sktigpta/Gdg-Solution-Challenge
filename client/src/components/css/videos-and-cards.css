@@ -8,7 +8,7 @@
 .card-header-title {
     font-size: 15px;
     padding: 8px 0;
-    width: 90%;
+    max-width: 200px;
 }
 
 .toggle-btn {
@@ -88,9 +88,9 @@
     border-radius: 5px;
     text-align: center;
     margin-bottom: 10px;
+    width: 100%;
 }
 
-/* Sticky Header for Fetched Videos */
 .sticky-header {
     position: sticky;
     top: -1em;
@@ -108,7 +108,6 @@
     gap: 10px;
 }
 
-/* Refresh Button Animation */
 .refresh-button {
     background: transparent;
     border: none;
@@ -132,7 +131,6 @@
     animation: spin 0.7s linear infinite;
 }
 
-/* Video Count Badge */
 .video-count {
     background: #e6e6e6;
     font-size: 12px;
@@ -144,7 +142,6 @@
     justify-content: center;
 }
 
-/* Content Layout */
 .content {
     display: flex;
     flex-direction: column;

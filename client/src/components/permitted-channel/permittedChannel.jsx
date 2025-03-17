@@ -70,13 +70,12 @@ const PermittedVideos = () => {
 
   return (
     <div className="container">
-      {/* Sticky Header */}
       <div className="sticky-header">
         <div className="header-content">
           <h3 className="card-header-title">Manage Permitted Videos</h3>
           <span className="video-count">{videos.length}</span>
         </div>
-        <button className="toggle-btn" onClick={handleToggle}>
+        <button className="toggle-btn"  style={{padding:"0"}}  onClick={handleToggle}>
           {isHidden ? <IoIosArrowDown /> : <IoIosArrowUp />}
         </button>
       </div>
@@ -90,7 +89,7 @@ const PermittedVideos = () => {
               value={newVideoId}
               className="search-box"
               onChange={(e) => setNewVideoId(e.target.value)}
-              onKeyPress={handleKeyPress} // Added event listener for Enter key
+              onKeyPress={handleKeyPress}
             />
           </div>
 

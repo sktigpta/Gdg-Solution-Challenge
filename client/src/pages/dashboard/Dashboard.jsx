@@ -4,6 +4,8 @@ import FetchedVideos from "../../components/fetched-videos/FetchedVideos";
 import { ContainerTwo } from "../../components/cards-and-containers/Container";
 import Query from "../../components/query/query";
 import PermittedVideos from "../../components/permitted-channel/permittedChannel";
+import Processed from "../../components/processed-video/Processed";
+import Terminal from "../../components/terminal/Terminal";
 
 function Dashboard() {
     return (
@@ -13,6 +15,12 @@ function Dashboard() {
                     <Query />
                     <FetchedVideos />
                     <PermittedVideos />
+                </ContainerTwo>
+                <ContainerTwo >
+                    <Processed />
+                </ContainerTwo>
+                <ContainerTwo >
+                    <Terminal/>
                 </ContainerTwo>
             </div>
         </>

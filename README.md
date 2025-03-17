@@ -27,22 +27,24 @@ The backend handles YouTube data collection, search query management, and provid
 ```
 📦 Backend  
  ┣ 📂 controllers/  
- ┃ ┣ 📜 permissionController.js  # Manages authorized content
- ┃ ┣ 📜 searchQueriesController.js  # Handles search parameters
- ┃ ┗ 📜 youtubeController.js  # Controls YouTube data collection
+ ┃ ┣ 📜 permissionController.js
+ ┃ ┣ 📜 searchQueriesController.js
+ ┃ ┗ 📜 youtubeController.js
  ┣ 📂 routes/  
- ┃ ┣ 📜 permissionRoutes.js  # API routes for permissions
- ┃ ┣ 📜 searchQueries.js  # API routes for search queries
- ┃ ┗ 📜 youtubeRoutes.js  # API routes for YouTube operations
+ ┃ ┣ 📜 permissionRoutes.js
+ ┃ ┣ 📜 searchQueries.js
+ ┃ ┗ 📜 youtubeRoutes.js
  ┣ 📂 middleware/  
- ┃ ┣ 📜 authMiddleware.js  # Authentication handling
- ┃ ┗ 📜 errorHandler.js  # Error management
+ ┃ ┣ 📜 authMiddleware.js
+ ┃ ┗ 📜 errorHandler.js
  ┣ 📂 config/  
- ┃ ┗ 📜 firebase.js  # Firebase configuration
+ ┃ ┗ 📜 firebase.js
+ ┣ 📂 firebase/  
+ ┃ ┗ 📜 serviceAccountKey.json
  ┣ 📂 script/  
- ┃ ┗ 📜 youtubeFetcher.js  # YouTube data collection script
- ┣ 📜 server.js  # Main server application
- ┗ 📜 .env  # Environment variables
+ ┃ ┗ 📜 youtubeFetcher.js
+ ┣ 📜 server.js
+ ┗ 📜 .env
 ```
 
 ### 2. AI Processing Engine
@@ -51,16 +53,31 @@ The AI component handles the core detection functionality, comparing videos agai
 
 ```
 📦 AI
- ┣ 📂 assets/  # Stores reference content and frames
- ┣ 📂 dmca/  # DMCA template generation
- ┣ 📂 logs/  # System operation logs
- ┣ 📂 processing/  # Video processing utilities
- ┣ 📂 src/
- ┃ ┣ 📂 firebase/  # Firebase integration
- ┃ ┣ 📂 models/  # AI detection models
- ┃ ┣ 📂 processing/  # Core processing logic
- ┃ ┗ 📂 utils/  # Utility functions
- ┣ 📜 main.py  # Main application entry point
+ ┣ 📂 .venv
+ ┃ ┗ --
+ ┣ 📂 assets
+ ┃ ┣ 📂 frames
+ ┃ ┗ 📂 videos //refrence video for matching the frames
+ ┣ 📂 dmca
+ ┃ ┗ --
+ ┣ 📂 logs
+ ┃ ┗ 📜processing.log
+ ┣ 📂 processing
+ ┃ ┣ 📂processed_videos
+ ┃ ┗ 📂queue
+ ┣ 📂 src
+ ┃ ┣ 📂 firebase
+ ┃ ┃ ┣ firebase_handler.py
+ serviceAccountKey.json
+ ┃ ┣ 📂 models
+ ┃ ┣ 📂pretrained
+ ┃ ┃ ┣ 📜coco.names
+ ┃ ┃ ┣ 📜yolov4.cfg
+ ┃ ┃ ┗ 📜yolov4.weights
+ ┃ ┗ yolo_detector.py
+ ┃ ┣ 📂 processing
+ ┃ ┗ 📂 utils
+ ┣ 📜 main.py
  ┗ 📜 requirements.txt  # Python dependencies
 ```
 
