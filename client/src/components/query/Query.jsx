@@ -4,11 +4,10 @@ import Card from "../../components/cards-and-containers/Card";
 import "./Query.css";
 
 const Query = () => {
-  const [queries, setQueries] = useState([]); // Store queries from Firebase
-  const [newQuery, setNewQuery] = useState(""); // For input field
-  const API_URL = "http://localhost:5000/api/search-queries"; // Backend API URL
+  const [queries, setQueries] = useState([]);
+  const [newQuery, setNewQuery] = useState("");
+  const API_URL = "http://localhost:5000/api/search-queries"; 
 
-  // ✅ Fetch search queries from Firebase
   useEffect(() => {
     fetchQueries();
   }, []);
@@ -16,30 +15,28 @@ const Query = () => {
   const fetchQueries = async () => {
     try {
       const response = await axios.get(API_URL);
-      setQueries(response.data); // Update state with fetched queries
+      setQueries(response.data);
     } catch (error) {
       console.error("❌ Error fetching queries:", error);
     }
   };
 
-  // ✅ Add query on "Enter" key press
   const handleKeyDown = async (e) => {
     if (e.key === "Enter" && newQuery.trim()) {
       try {
         const response = await axios.post(API_URL, { query: newQuery });
-        setQueries([...queries, response.data]); // Add new query to state
-        setNewQuery(""); // Clear input field
+        setQueries([...queries, response.data]);
+        setNewQuery("");
       } catch (error) {
         console.error("❌ Error adding query:", error);
       }
     }
   };
 
-  // ✅ Delete a query from Firebase
   const deleteQuery = async (id) => {
     try {
       await axios.delete(`${API_URL}/${id}`);
-      setQueries(queries.filter((query) => query.id !== id)); // Remove from UI
+      setQueries(queries.filter((query) => query.id !== id));
     } catch (error) {
       console.error("❌ Error deleting query:", error);
     }
@@ -48,7 +45,6 @@ const Query = () => {
   return (
     <div className="query-container">
       <Card>
-        {/* 🔹 Input field (No button) */}
         <div className="query-input">
           <input
             type="text"
@@ -56,18 +52,17 @@ const Query = () => {
             placeholder="Add Query"
             value={newQuery}
             onChange={(e) => setNewQuery(e.target.value)}
-            onKeyDown={handleKeyDown} // ✅ Add query on "Enter"
+            onKeyDown={handleKeyDown}
           />
         </div>
 
-        {/* 🔹 List of queries */}
         <div className="queries-list">
           {queries.length === 0 ? (
             <p>No queries found.</p>
           ) : (
             queries.map((query) => (
               <div className="query-item" key={query.id}>
-                <div className="b-back"></div> {/* Gradient overlay */}
+                <div className="b-back"></div>
                 {query.query}
                 <button className="delete-btn" onClick={() => deleteQuery(query.id)}>X</button>
               </div>

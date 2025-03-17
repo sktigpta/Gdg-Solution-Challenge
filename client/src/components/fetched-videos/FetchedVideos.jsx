@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { TbRefresh } from "react-icons/tb"; // Refresh icon
+import { TbRefresh } from "react-icons/tb";
 import Container from "../cards-and-containers/Container";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import "../css/videos-and-cards.css";
 
 const FetchedVideos = () => {
-    const [videos, setVideos] = useState([]); // Store fetched videos
+    const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [isHidden, setIsHidden] = useState(true);
 
-    // ✅ Show error message for 5 seconds
     const showError = (message) => {
         setErrorMessage(message);
         console.error(`❌ ERROR: ${message}`);
-
         setTimeout(() => setErrorMessage(""), 5000);
     };
 
-    // ✅ Fetch stored videos from Firebase (Initial load)
     const fetchStoredVideos = async () => {
-        setRefreshing(true);
         try {
             const response = await fetch("http://localhost:5000/api/youtube/stored-videos");
             if (!response.ok) throw new Error("Failed to fetch videos");
@@ -32,23 +28,23 @@ const FetchedVideos = () => {
             showError(error.message);
             setVideos([]);
         }
-        setRefreshing(false);
         setLoading(false);
     };
 
-    // ✅ Fetch videos on first load
     useEffect(() => {
         fetchStoredVideos();
+        const interval = setInterval(fetchStoredVideos, 600000);
+
+        return () => clearInterval(interval);
     }, []);
 
-    // ✅ Add new YouTube videos before fetching
     const addNewVideos = async () => {
         setRefreshing(true);
         try {
             const response = await fetch("http://localhost:5000/api/youtube/get-videos", { method: "POST" });
             if (!response.ok) throw new Error("Failed to fetch new videos");
 
-            await fetchStoredVideos(); // ✅ Wait for updated videos
+            await fetchStoredVideos();
         } catch (error) {
             showError(error.message);
         }
@@ -57,29 +53,24 @@ const FetchedVideos = () => {
 
     return (
         <Container>
-            {/* 🔹 Error Message Banner */}
             {errorMessage && <div className="error-banner">{errorMessage}</div>}
 
-            {/* 🔹 Header with Refresh Button */}
             <div className="sticky-header">
                 <div className="header-content">
                     <h3 className="card-header-title">Fetched Videos</h3>
                     <span className="video-count">{videos?.length || 0}</span>
                 </div>
 
-                {/* Refresh Button */}
-                <button className="refresh-button" onClick={addNewVideos} disabled={refreshing}>
+                <button className="refresh-button" style={{ padding: "0" }} onClick={addNewVideos} disabled={refreshing}>
                     <TbRefresh className={`refresh-icon ${refreshing ? "spinning" : ""}`} />
                 </button>
 
-                {/* Toggle Button for Showing Videos */}
-                <button className="toggle-btn" onClick={() => setIsHidden(!isHidden)}>
-                    {isHidden ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                <button className="toggle-btn" style={{ padding: "0" }} onClick={() => setIsHidden(!isHidden)}>
+                    {!isHidden ? <IoIosArrowDown /> : <IoIosArrowUp />}
                 </button>
             </div>
 
-            {/* 🔹 Video List */}
-            {!isHidden && (
+            {isHidden && (
                 <div className="content">
                     {loading ? (
                         <p>Loading videos...</p>

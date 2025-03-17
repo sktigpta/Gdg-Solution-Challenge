@@ -1,4 +1,4 @@
-import "./Container.css"; // Import the CSS file
+import "./Container.css";
 
 const Container = ({ children }) => {
 
