@@ -344,7 +344,7 @@ flowchart TD
 
 #### 1. Clone the repository
 ```bash
-git clone https://github.com/your-organization/safeguarding-stories.git
+git clone https://github.com/sktigpta/Gdg-Solution-Challenge.git
 cd safeguarding-stories
 ```
 
