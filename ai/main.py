@@ -19,9 +19,6 @@ from src.models.yolo_detector import YOLODetector
 
 
 def loading_animation(duration=5):
-    
-    check_internet_connection()
-    
     """Displays loading status as JSON for frontend visualization"""
     dots_cycle = itertools.cycle(["Loading.", "Loading..", "Loading..."])
     start_time = time.time()
@@ -84,6 +81,7 @@ def check_internet_connection():
     """Verify internet connectivity"""
     try:
         requests.get('https://www.google.com', timeout=5)
+        logging.info("Connected to Web")
     except Exception as e:
         logging.error("No internet connection: %s", str(e))
         raise
@@ -263,6 +261,7 @@ def main():
     """Application entry point"""
     try:
         loading_animation()
+        check_internet_connection()
         configure_logging()
         create_required_directories()
         
