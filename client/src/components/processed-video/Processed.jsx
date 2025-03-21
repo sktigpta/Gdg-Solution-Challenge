@@ -6,6 +6,15 @@ const Processed = () => {
     const [videos, setVideos] = useState([]);
     const [videoData, setVideoData] = useState({});
 
+    const formatFirebaseTimestamp = (timestamp) => {
+        if (!timestamp || !timestamp._seconds) return "Unknown"; // Handle missing timestamps
+        const date = new Date(timestamp._seconds * 1000); // Convert seconds to milliseconds
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
     useEffect(() => {
         fetchData();
 
@@ -44,14 +53,15 @@ const Processed = () => {
 
     return (
         <div style={{ width: "350px" }}>
-            <div className="grid">
-                <div className="sticky-header">
-                    <div style={{padding: "8px 0"}} className="header-content">
-                        <h3 className="card-header-title">Fetched Videos</h3>
-                        <span className="video-count">{videos?.length || 0}</span>
-                    </div>
+            <div className="sticky-header">
+                <div className="header-content">
+                    <h3 style={{ marginTop: "8px" }} className="card-header-title">Fetched Videos</h3>
+                    <span className="video-count">{videos?.length || 0}</span>
                 </div>
-                <ul className="video-list">
+            </div>
+
+            <div className="grid">
+                <ul style={{ marginTop: "0" }} className="video-list">
                     {videos.length > 0 ? (
                         videos.map((video) => (
                             <li key={video.videoId} className="video-item">
@@ -61,10 +71,16 @@ const Processed = () => {
                                     className="video-thumbnail"
                                 />
                                 <div className="video-info">
-                                    <p className="video-title">{videoData[video.videoId]?.title || "Untitled Video"}</p>
+                                    <p className="video-title">
+                                        {videoData[video.videoId]?.title?.length > 50
+                                            ? videoData[video.videoId]?.title.substring(0, 35) + "..."
+                                            : videoData[video.videoId]?.title || "Untitled Video"}
+                                    </p>
                                     <p className="video-disc ">Copy Percentage:{video.copyPercentage?.toFixed(2)}%</p>
-                                    <p className="video-disc ">Status:{video.copied ? "Copied" : "Not Copied"}</p>
-                                    <p className="video-disc ">Processed On:{video.processedAt ? new Date(video.processedAt).toLocaleString() : "Unknown"}</p>
+                                    <p className="video-disc ">Status: {video.copied ? "Copied" : "Not Copied"}</p>
+                                    <p className="video-disc">Processed On: {formatFirebaseTimestamp(video.processedAt)}</p>
+
+
                                     <button>Generate DMCA</button>
                                 </div>
                             </li>
