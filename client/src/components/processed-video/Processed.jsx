@@ -43,9 +43,14 @@ const Processed = () => {
     };
 
     return (
-        <div style={{ width: "350px" }} className="container">
-            <h3 className="card-header-title">Processed Videos</h3>
+        <div style={{ width: "350px" }}>
             <div className="grid">
+                <div className="sticky-header">
+                    <div style={{padding: "8px 0"}} className="header-content">
+                        <h3 className="card-header-title">Fetched Videos</h3>
+                        <span className="video-count">{videos?.length || 0}</span>
+                    </div>
+                </div>
                 <ul className="video-list">
                     {videos.length > 0 ? (
                         videos.map((video) => (
@@ -57,9 +62,9 @@ const Processed = () => {
                                 />
                                 <div className="video-info">
                                     <p className="video-title">{videoData[video.videoId]?.title || "Untitled Video"}</p>
-                                    <p><strong>Copy Percentage:</strong> {video.copyPercentage?.toFixed(2)}%</p>
-                                    <p><strong>Status:</strong> {video.copied ? "Copied" : "Not Copied"}</p>
-                                    <p><strong>Processed On:</strong> {video.processedAt ? new Date(video.processedAt).toLocaleString() : "Unknown"}</p>
+                                    <p className="video-disc ">Copy Percentage:{video.copyPercentage?.toFixed(2)}%</p>
+                                    <p className="video-disc ">Status:{video.copied ? "Copied" : "Not Copied"}</p>
+                                    <p className="video-disc ">Processed On:{video.processedAt ? new Date(video.processedAt).toLocaleString() : "Unknown"}</p>
                                     <button>Generate DMCA</button>
                                 </div>
                             </li>

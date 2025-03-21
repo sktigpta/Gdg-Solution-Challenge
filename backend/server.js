@@ -29,13 +29,27 @@ app.use(cors({
 
 app.use(express.json());
 
-// Function to execute terminal commands and send logs via WebSockets
 const runCommand = (command, workingDir = path.join(__dirname, "..")) => {
     const process = exec(command, { cwd: workingDir });
 
     process.stdout.on("data", (data) => {
         console.log(data);
-        io.emit("terminal-output", data);
+        
+        // Check for special JSON progress format
+        const lines = data.toString().split('\n');
+        for (const line of lines) {
+            if (line.startsWith('PROGRESS_JSON:')) {
+                try {
+                    const jsonStr = line.substring('PROGRESS_JSON:'.length);
+                    const progressData = JSON.parse(jsonStr);
+                    io.emit("progress-data", progressData);
+                } catch (e) {
+                    console.error("Error parsing progress JSON:", e);
+                }
+            } else if (line.trim()) {
+                io.emit("terminal-output", line);
+            }
+        }
     });
 
     process.stderr.on("data", (data) => {
@@ -47,6 +61,7 @@ const runCommand = (command, workingDir = path.join(__dirname, "..")) => {
         io.emit("terminal-output", `Process exited with code ${code}`);
     });
 };
+
 
 // API to start AI server
 app.get("/start-ai", (req, res) => {

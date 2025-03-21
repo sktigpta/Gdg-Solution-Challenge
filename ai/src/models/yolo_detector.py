@@ -22,7 +22,6 @@ class YOLODetector:
             
             self.conf_threshold = conf_threshold
             self.nms_threshold = nms_threshold
-            logging.info("YOLO model initialized with input size %d", input_size)
             
         except Exception as e:
             logging.error("Failed to initialize YOLO detector: %s", str(e))
