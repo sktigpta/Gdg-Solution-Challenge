@@ -64,7 +64,7 @@ const Query = () => {
               <div className="query-item" key={query.id}>
                 <div className="b-back"></div>
                 {query.query}
-                <button className="delete-btn" onClick={() => deleteQuery(query.id)}>X</button>
+                <button style={{padding:"0"}} className="delete-btn" onClick={() => deleteQuery(query.id)}>X</button>
               </div>
             ))
           )}
