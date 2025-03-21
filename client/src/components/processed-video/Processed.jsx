@@ -55,7 +55,7 @@ const Processed = () => {
         <div style={{ width: "350px" }}>
             <div className="sticky-header">
                 <div className="header-content">
-                    <h3 style={{ marginTop: "8px" }} className="card-header-title">Fetched Videos</h3>
+                    <h3 style={{ marginTop: "8px" }} className="card-header-title">Processed Videos</h3>
                     <span className="video-count">{videos?.length || 0}</span>
                 </div>
             </div>
