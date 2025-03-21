@@ -66,15 +66,12 @@ const runCommand = (command, workingDir = path.join(__dirname, "..")) => {
 // API to start AI server
 app.get("/start-ai", (req, res) => {
     const aiPath = path.join(__dirname, "../ai");
+
     const command = process.platform === "win32"
         ? `.venv\\Scripts\\activate && python main.py`
         : `source .venv/bin/activate && python main.py`;
 
-    aiProcess = exec(command, { cwd: aiPath });
-
-    aiProcess.stdout.on("data", (data) => console.log(`AI: ${data}`));
-    aiProcess.stderr.on("data", (data) => console.error(`AI Error: ${data}`));
-
+    runCommand(command, aiPath);
     res.json({ message: "AI server started..." });
 });
 
@@ -88,6 +85,7 @@ app.get("/stop-ai", (req, res) => {
         res.status(400).json({ error: "AI server is not running." });
     }
 });
+
 
 // Routes
 app.use("/api/youtube", youtubeRoutes);

@@ -10,7 +10,7 @@ export default function Terminal() {
     const [logs, setLogs] = useState([]);
     const [progressData, setProgressData] = useState({});
     const [isStarting, setIsStarting] = useState(false);
-    const [serverStarted, setServerStarted] = useState(false);
+    const [serverStatus, setServerStatus] = useState(localStorage.getItem("serverStarted") === "true" ? "running" : "loading");
 
     useEffect(() => {
         socket.on("terminal-output", (data) => {
@@ -30,13 +30,40 @@ export default function Terminal() {
         };
     }, []);
 
+    useEffect(() => {
+        if (Object.keys(progressData).length > 0) {
+            setServerStatus("running");
+            localStorage.setItem("serverStarted", "true");
+        } else {
+            setServerStatus("stopped");
+            localStorage.setItem("serverStarted", "false");
+        }
+    }, [progressData]);
+
     const startAI = async () => {
         setIsStarting(true);
         setProgressData({});
         setLogs([]);
         await fetch("http://localhost:5000/start-ai");
         setIsStarting(false);
-        setServerStarted(true);
+        setServerStatus("running");
+        localStorage.setItem("serverStarted", "true");
+    };
+
+    const stopAI = async () => {
+        setIsStarting(true);
+        setProgressData({});
+        setLogs([]);
+        await fetch("http://localhost:5000/stop-ai");
+        setIsStarting(false);
+        setServerStatus("stopped");
+        localStorage.setItem("serverStarted", "false");
+    };
+
+    const getButtonText = () => {
+        if (isStarting) return "Processing...";
+        if (serverStatus === "loading") return "Loading . .. ...";
+        return serverStatus === "running" ? "Stop AI Server" : "Start AI Server";
     };
 
     const renderProgressBar = (data) => {
@@ -87,12 +114,12 @@ export default function Terminal() {
             <div style={{ marginBottom: "0.5em", justifyContent: "space-between" }} className="f-row">
                 <h3>Live Terminal Output</h3>
                 <motion.button
-                    onClick={startAI}
+                    onClick={serverStatus === "running" ? stopAI : startAI}
                     whileTap={{ scale: 0.9 }}
                     style={{ display: "flex", alignItems: "center", gap: "8px" }}
-                    disabled={isStarting}
+                    disabled={isStarting || serverStatus === "loading"}
                 >
-                    <FaBrain /> {isStarting ? "Starting..." : serverStarted ? "AI Server Started" : "Start AI Server"}
+                    <FaBrain /> {getButtonText()}
                 </motion.button>
             </div>
             <div style={{
@@ -111,11 +138,15 @@ export default function Terminal() {
                     </div>
                 ))}
                 <ContainerTwo>
-
-                    {logs.map((log, index) => (
-                        <div key={`log-${index}`}>{log}</div>
-                    ))}
-
+                    {logs.length > 0 ? (
+                        <div style={{ maxHeight: "45vh", overflowY: "auto", paddingRight: "0" }}>
+                            {logs.map((log, index) => (
+                                <div style={{ fontSize: "0.8em" }} key={`log-${index}`}>{log}</div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No logs available...</p>
+                    )}
                 </ContainerTwo>
             </div>
             <p style={{ color: "gray", marginTop: "0.5em" }}>
