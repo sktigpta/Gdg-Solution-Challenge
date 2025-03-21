@@ -75,7 +75,7 @@
     color: #333;
 }
 
-.video-date {
+.video-date , .video-disc{
     font-size: 12px;
     color: #777;
     margin: 2px 0 0;

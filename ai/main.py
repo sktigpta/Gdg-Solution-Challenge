@@ -1,4 +1,5 @@
 import os
+import json
 import cv2
 import logging
 import time
@@ -16,17 +17,24 @@ from src.processing.frame_extractor import extract_frames
 from src.processing.compare_results import compare_frames
 from src.models.yolo_detector import YOLODetector
 
+
 def loading_animation(duration=5):
-    """Displays 'Loading.' 'Loading..' 'Loading...' in the same line like a website animation."""
-    dots_cycle = itertools.cycle(["Loading.", "Loading..", "Loading..."])  # Cycle through states
+    """Displays loading status as JSON for frontend visualization"""
+    dots_cycle = itertools.cycle(["Loading.", "Loading..", "Loading..."])
     start_time = time.time()
 
-    while time.time() - start_time < duration:  # Run for 'duration' seconds
-        sys.stdout.write(f"\r{next(dots_cycle)} ")  # \r keeps it in the same line
-        sys.stdout.flush()
-        time.sleep(0.5)  # Adjust speed if needed
+    while time.time() - start_time < duration:
+        progress = min(99, int((time.time() - start_time) / duration * 100))
+        loading_json = {
+            "type": "loading",
+            "message": next(dots_cycle),
+            "percent": progress
+        }
+        print(f"PROGRESS_JSON:{json.dumps(loading_json)}", flush=True)
+        time.sleep(0.5)
 
-    sys.stdout.write("\rLoading... Done!     \n")  # Final message
+    # Final completion message
+    print(f"PROGRESS_JSON:{json.dumps({'type': 'loading', 'message': 'Done!', 'percent': 100})}", flush=True)
 
 # ======================
 # Configuration
@@ -68,13 +76,12 @@ def configure_logging():
         ],
         force=True
     )
-    logging.info("Logging system initialized")
 
 def check_internet_connection():
     """Verify internet connectivity"""
     try:
         requests.get('https://www.google.com', timeout=5)
-        logging.info("Network connection verified : Connected to Web")
+        print("Connected to Web")
     except Exception as e:
         logging.error("No internet connection: %s", str(e))
         raise
@@ -89,7 +96,6 @@ def create_required_directories():
     
     for directory in required_dirs:
         os.makedirs(directory, exist_ok=True)
-        logging.info("Created directory: %s", directory)
 
 # ======================
 # Core Functionality
@@ -99,8 +105,8 @@ def load_reference_data(yolo):
     try:
         if not os.path.exists(REFERENCE_VIDEO_PATH):
             raise FileNotFoundError(f"Reference video missing at {REFERENCE_VIDEO_PATH}")
-            
-        logging.info("Loading reference video data...")
+        
+        # The extract_frames function will now emit its own progress updates
         ref_frames = extract_frames(
             REFERENCE_VIDEO_PATH,
             output_dir="assets/frames",
@@ -108,16 +114,34 @@ def load_reference_data(yolo):
         )
         
         total_frames = len(ref_frames)
-        logging.info("Extracted %d reference frames", total_frames)
+        
+        # Send initial frame processing progress
+        progress_json = {
+            "type": "progress",
+            "task": "processing_frames",
+            "current": 0,
+            "total": total_frames,
+            "percent": 0
+        }
+        print(f"PROGRESS_JSON:{json.dumps(progress_json)}", flush=True)
         
         results = []
         
-        # Use tqdm for progress bar instead of logging each step
-        with tqdm(total=total_frames, desc="Processing reference frames") as progress_bar:
-            for frame_path in ref_frames:
-                frame = cv2.imread(frame_path)
-                results.append(yolo.detect(frame))
-                progress_bar.update(1)
+        # Process frames with JSON progress updates
+        for i, frame_path in enumerate(ref_frames):
+            frame = cv2.imread(frame_path)
+            results.append(yolo.detect(frame))
+            
+            # Report progress every few frames
+            if i % 5 == 0 or i == total_frames - 1:
+                progress_json = {
+                    "type": "progress",
+                    "task": "processing_frames",
+                    "current": i + 1,
+                    "total": total_frames,
+                    "percent": round((i + 1) / total_frames * 100, 1)
+                }
+                print(f"PROGRESS_JSON:{json.dumps(progress_json)}", flush=True)
             
         logging.info("Completed reference frame processing")
         return results
@@ -237,25 +261,13 @@ def main():
     """Application entry point"""
     try:
         loading_animation()
+        check_internet_connection()
         configure_logging()
         create_required_directories()
         
-        logging.info("Starting video piracy detection system")
-        check_internet_connection()
-        
-        logging.info("Initializing services...")
         firebase = FirebaseHandler()
-        logging.info("Firebase initialized")
-        
-        logging.info("Loading YOLO model...")
         yolo = YOLODetector()
-        logging.info("YOLO model loaded")
-        
-        logging.info("Loading reference data...")
         reference_data = load_reference_data(yolo)
-        logging.info("Reference data loaded")
-        
-        logging.info("Starting processing loop")
         while True:
             try:
                 pending_videos = firebase.get_pending_videos()
