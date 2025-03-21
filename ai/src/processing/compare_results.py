@@ -1,9 +1,9 @@
 import cv2
+import json
 import sys
-from tqdm import tqdm
 
 def calculate_similarity(ref_detections, target_detections):
-    # Simple similarity based on class matches
+    """Calculate similarity based on class matches."""
     ref_classes = {d['class'] for d in ref_detections}
     target_classes = {d['class'] for d in target_detections}
     intersection = ref_classes.intersection(target_classes)
@@ -22,23 +22,49 @@ def compare_frames(target_frames, reference_data, yolo, threshold=0.5):
         List of boolean values indicating whether each frame is copied or not
     """
     is_copied = []
-    
-    # Create a tqdm progress bar
-    progress_bar = tqdm(total=len(target_frames), 
-                        desc="Comparing frames", 
-                        bar_format="{desc}: {percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt} frames")
-    
-    for frame_path in target_frames:
+    total_frames = len(target_frames)
+
+    # Send initial progress report
+    progress_json = {
+        "type": "progress",
+        "task": "comparing_frames",
+        "current": 0,
+        "total": total_frames,
+        "percent": 0
+    }
+    print(f"PROGRESS_JSON:{json.dumps(progress_json)}", flush=True)
+
+    for i, frame_path in enumerate(target_frames):
         frame = cv2.imread(frame_path)
         if frame is None:
             is_copied.append(False)
-            progress_bar.update(1)
             continue
-            
+
         target_detections = yolo.detect(frame)
         max_similarity = max(calculate_similarity(ref, target_detections) for ref in reference_data)
         is_copied.append(max_similarity >= threshold)
-        progress_bar.update(1)
-    
-    progress_bar.close()
+
+        # Update progress every 10 frames or at the last frame
+        if i % 10 == 0 or i == total_frames - 1:
+            progress_percent = min(99, int((i / total_frames) * 100))
+            progress_json = {
+                "type": "progress",
+                "task": "comparing_frames",
+                "current": i,
+                "total": total_frames,
+                "percent": progress_percent
+            }
+            print(f"PROGRESS_JSON:{json.dumps(progress_json)}", flush=True)
+
+    # Send final progress update
+    final_progress = {
+        "type": "progress",
+        "task": "comparing_frames",
+        "current": total_frames,
+        "total": total_frames,
+        "percent": 100,
+        "compared_frames": len(is_copied)
+    }
+    print(f"PROGRESS_JSON:{json.dumps(final_progress)}", flush=True)
+
     return is_copied
