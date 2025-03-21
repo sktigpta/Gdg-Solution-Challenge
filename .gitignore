@@ -7,12 +7,11 @@ ai/.venv/
 
 # Ignore Firebase credentials and environment files
 ai/src/firebase/serviceAccountKey.json
-ai/src/firebase/.env
 backend/firebase/serviceAccountKey.json
-backend/firebase/.env
+backend/.env
 
 # Ignore AI model files
-ai/src/models/pretrained
+ai/src/models/pretrained/
 ai/assets/frames
 ai/assets/videos
 
